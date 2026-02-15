@@ -1,0 +1,1993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SunExpress - Professional Booking System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #FFB800 0%, #FF6B00 100%);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #FFB800;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #FFB800;
+        }
+
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FFB800 0%, #FF8C00 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #FF8C00 0%, #FFB800 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 184, 0, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #FFB800;
+            border: 2px solid #FFB800;
+        }
+
+        .btn-secondary:hover {
+            background: #FFB800;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-warning {
+            background: #FF6B00;
+            color: white;
+        }
+
+        .btn-small {
+            padding: 0.3rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            color: white;
+            padding: 4rem 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .hero-slogan {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+            line-height: 1.8;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #FFB800;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .checkbox-group {
+            margin-bottom: 1rem;
+        }
+
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .checkbox-group label:hover {
+            background: #fff8e1;
+            border-color: #FFB800;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #FFB800;
+        }
+
+        .flight-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 4px solid #FFB800;
+        }
+
+        .flight-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .flight-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #FFB800;
+        }
+
+        .flight-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #10b981;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            overflow-x: auto;
+            display: block;
+        }
+
+        .table th, .table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .table th {
+            background: #fff8e1;
+            font-weight: 600;
+            color: #FF8C00;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-warning {
+            background: #fff8e1;
+            color: #FF6B00;
+        }
+
+        .badge-info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .badge-danger {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .alert-success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 2px solid #10b981;
+        }
+
+        .alert-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 2px solid #ef4444;
+        }
+
+        .alert-warning {
+            background: #fff8e1;
+            color: #FF6B00;
+            border: 2px solid #FFB800;
+        }
+
+        .alert-info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 2px solid #3b82f6;
+        }
+
+        .boarding-pass {
+            background: linear-gradient(135deg, #FFB800 0%, #FF6B00 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+        }
+
+        .boarding-pass-title {
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .boarding-pass-body {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .boarding-pass-field {
+            text-align: center;
+        }
+
+        .boarding-pass-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .boarding-pass-value {
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .seat-map {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+        }
+
+        .seat-map-title {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #FFB800;
+        }
+
+        .seat-legend {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .legend-box {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            border: 2px solid #333;
+        }
+
+        .legend-box.available {
+            background: #10b981;
+        }
+
+        .legend-box.occupied {
+            background: #ef4444;
+        }
+
+        .legend-box.selected {
+            background: #FFB800;
+        }
+
+        .seat-rows {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .seat-row {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            align-items: center;
+        }
+
+        .seat-row-label {
+            width: 40px;
+            font-weight: bold;
+            text-align: center;
+            color: #FFB800;
+        }
+
+        .seat {
+            width: 45px;
+            height: 45px;
+            border: 2px solid #333;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+
+        .seat.available {
+            background: #10b981;
+            color: white;
+        }
+
+        .seat.available:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .seat.occupied {
+            background: #ef4444;
+            color: white;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .seat.selected {
+            background: #FFB800;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .aisle {
+            width: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #FFB800 0%, #FF6B00 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(255, 184, 0, 0.3);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .security-section {
+            background: #fff8e1;
+            border: 2px solid #FFB800;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        .security-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #FF6B00;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .checkin-hero {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+
+        .checkin-hero h1 {
+            font-size: 2.5rem;
+            color: #FFB800;
+            margin-bottom: 1rem;
+        }
+
+        .checkin-hero p {
+            color: #6b7280;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .reference-input {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .reference-input input {
+            text-align: center;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .booking-details-card {
+            background: #f9fafb;
+            border: 2px solid #FFB800;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .export-section {
+            background: #fff8e1;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+            border: 2px solid #FFB800;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        footer {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+            color: #666;
+        }
+
+        footer strong {
+            color: #FFB800;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #FFB800;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .seat {
+                width: 35px;
+                height: 35px;
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand" onclick="showPage('home')">SunExpress</div>
+            <ul class="nav-links">
+                <li><a onclick="showPage('home')">Home</a></li>
+                <li><a onclick="showPage('search')">Search Flights</a></li>
+                <li><a onclick="showPage('checkin')">Check-In</a></li>
+                <li id="dashboardLink" class="hidden"><a onclick="showDashboard()">Dashboard</a></li>
+            </ul>
+            <div id="navAuth">
+                <button class="btn btn-secondary btn-small" onclick="showPage('login')">Login</button>
+                <button class="btn btn-primary btn-small" onclick="showPage('register')">Register</button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="content"></div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js" onerror="console.error('Failed to load Firebase App SDK')"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js" onerror="console.error('Failed to load Firebase Database SDK')"></script>
+
+
+    <script>
+        // ============================================================================
+        // FIREBASE CONFIGURATION
+        // ============================================================================
+        // IMPORTANT: Replace these with your actual Firebase config
+        // Get this from: Firebase Console > Project Settings > Your apps > Firebase SDK snippet
+        
+ const firebaseConfig = {
+    apiKey: "AIzaSyCVGX0WEdh6pVqIuZhXu7d3VHSN92lwl4A",
+    authDomain: "sunexpressroblox-adac6.firebaseapp.com",
+    databaseURL: "https://sunexpressroblox-adac6-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "sunexpressroblox-adac6",
+    storageBucket: "sunexpressroblox-adac6.firebasestorage.app",
+    messagingSenderId: "984092416165",
+    appId: "1:984092416165:web:9c58b81a7c2c3aa071154c",
+    measurementId: "G-MS4G44F1D0"
+};
+
+
+        // Initialize Firebase
+        console.log('🔍 Starting Firebase initialization...');
+        console.log('📋 Firebase SDK loaded:', typeof firebase !== 'undefined' ? 'YES' : 'NO');
+        
+        if (typeof firebase === 'undefined') {
+            console.error('❌ Firebase SDK not loaded! Check your internet connection.');
+        }
+        
+        let firebaseInitialized = false;
+        try {
+            console.log('📋 Firebase config:', firebaseConfig);
+            firebase.initializeApp(firebaseConfig);
+            firebaseInitialized = true;
+            console.log('✅ Firebase initialized successfully');
+        } catch (error) {
+            console.error('❌ Firebase initialization error:', error);
+            console.error('❌ Error name:', error.name);
+            console.error('❌ Error message:', error.message);
+            console.warn('⚠️ Using localStorage fallback.');
+        }
+
+        const database = firebaseInitialized ? firebase.database() : null;
+        console.log('📊 Database initialized:', database !== null ? 'YES' : 'NO (using localStorage)');
+
+        // ============================================================================
+        // CONSTANTS
+        // ============================================================================
+
+        const AIRPORTS = [
+            { code: 'DUB', name: 'Dublin, Ireland', iata: 'DUB', display: 'Dublin, Ireland (DUB)' },
+            { code: 'BJV', name: 'Bodrum, Turkey', iata: 'BJV', display: 'Bodrum, Turkey (BJV)' },
+            { code: 'GZP', name: 'Gazipasa-Alanya, Turkey', iata: 'GZP', display: 'Gazipasa-Alanya, Turkey (GZP)' },
+            { code: 'TIA', name: 'Tirana, Albania', iata: 'TIA', display: 'Tirana, Albania (TIA)' },
+            { code: 'FCO', name: 'Rome, Italy', iata: 'FCO', display: 'Rome, Italy (FCO)' },
+            { code: 'JSI', name: 'Skiathos, Greece', iata: 'JSI', display: 'Skiathos, Greece (JSI)' },
+            { code: 'CWL', name: 'Cardiff, Wales', iata: 'CWL', display: 'Cardiff, Wales (CWL)' },
+            { code: 'EDI', name: 'Edinburgh, Scotland', iata: 'EDI', display: 'Edinburgh, Scotland (EDI)' },
+            { code: 'APN', name: 'Alpena, Michigan', iata: 'APN', display: 'Alpena, Michigan (APN)' },
+            { code: 'HSR', name: 'Hillside, USA', iata: 'HSR', display: 'Hillside, USA (HSR)' },
+            { code: 'BER', name: 'Berlin, Germany', iata: 'BER', display: 'Berlin, Germany (BER)' },
+            { code: 'DLM', name: 'Dalaman, Turkey', iata: 'DLM', display: 'Dalaman, Turkey (DLM)' }
+        ];
+
+        const AIRCRAFT_TYPES = [
+            { name: 'Airbus A320neo', rows: 30, seatsPerRow: 6 },
+            { name: 'Airbus A320ceo', rows: 30, seatsPerRow: 6 },
+            { name: 'Airbus A321ceo', rows: 33, seatsPerRow: 6 },
+            { name: 'Airbus A321neo', rows: 33, seatsPerRow: 6 },
+            { name: 'Airbus A319ceo', rows: 25, seatsPerRow: 6 },
+            { name: 'Boeing 737-800', rows: 31, seatsPerRow: 6 },
+            { name: 'Boeing 737-8MAX', rows: 30, seatsPerRow: 6 }
+        ];
+
+        // ============================================================================
+        // DATABASE ABSTRACTION LAYER (Firebase + localStorage fallback)
+        // ============================================================================
+
+        class AirlineDB {
+            constructor() {
+                this.useFirebase = firebaseInitialized;
+                if (!this.useFirebase) {
+                    this.initLocalStorage();
+                }
+            }
+
+            initLocalStorage() {
+                if (!localStorage.getItem('users')) {
+                    localStorage.setItem('users', JSON.stringify([
+                        {
+                            id: 'admin001',
+                            username: 'SunexpressAdmin',
+                            password: 'SunEXPRESSadmin!',
+                            role: 'admin',
+                            fullName: 'System Administrator',
+                            email: 'admin@sunexpress.com'
+                        }
+                    ]));
+                }
+                if (!localStorage.getItem('flights')) localStorage.setItem('flights', JSON.stringify([]));
+                if (!localStorage.getItem('bookings')) localStorage.setItem('bookings', JSON.stringify([]));
+                if (!localStorage.getItem('checkins')) localStorage.setItem('checkins', JSON.stringify([]));
+            }
+
+            // User Management
+            async findUser(username) {
+                if (this.useFirebase) {
+                    const snapshot = await database.ref('users').orderByChild('username').equalTo(username).once('value');
+                    const users = snapshot.val();
+                    return users ? Object.values(users)[0] : null;
+                } else {
+                    const users = JSON.parse(localStorage.getItem('users'));
+                    return users.find(u => u.username === username);
+                }
+            }
+
+            async addUser(user) {
+                user.id = 'user_' + Date.now();
+                user.createdAt = new Date().toISOString();
+                
+                if (this.useFirebase) {
+                    await database.ref('users/' + user.id).set(user);
+                } else {
+                    const users = JSON.parse(localStorage.getItem('users'));
+                    users.push(user);
+                    localStorage.setItem('users', JSON.stringify(users));
+                }
+                return user;
+            }
+
+            async getAllUsers() {
+                if (this.useFirebase) {
+                    const snapshot = await database.ref('users').once('value');
+                    const users = snapshot.val();
+                    return users ? Object.values(users) : [];
+                } else {
+                    return JSON.parse(localStorage.getItem('users'));
+                }
+            }
+
+            // Flight Management
+            async addFlight(flight) {
+                flight.id = 'flight_' + Date.now();
+                flight.createdAt = new Date().toISOString();
+                
+                const aircraft = AIRCRAFT_TYPES.find(a => a.name === flight.aircraft);
+                flight.seats = this.generateSeatMap(aircraft.rows, aircraft.seatsPerRow);
+                
+                if (this.useFirebase) {
+                    await database.ref('flights/' + flight.id).set(flight);
+                } else {
+                    const flights = JSON.parse(localStorage.getItem('flights'));
+                    flights.push(flight);
+                    localStorage.setItem('flights', JSON.stringify(flights));
+                }
+                return flight;
+            }
+
+            generateSeatMap(rows, seatsPerRow) {
+                const seats = {};
+                const letters = ['A', 'B', 'C', 'D', 'E', 'F'];
+                
+                for (let row = 1; row <= rows; row++) {
+                    for (let i = 0; i < seatsPerRow; i++) {
+                        const seatNumber = `${row}${letters[i]}`;
+                        seats[seatNumber] = { status: 'available' };
+                    }
+                }
+                return seats;
+            }
+
+            async getAllFlights() {
+                if (this.useFirebase) {
+                    const snapshot = await database.ref('flights').once('value');
+                    const flights = snapshot.val();
+                    return flights ? Object.values(flights) : [];
+                } else {
+                    return JSON.parse(localStorage.getItem('flights'));
+                }
+            }
+
+            async updateFlight(id, updates) {
+                if (this.useFirebase) {
+                    await database.ref('flights/' + id).update(updates);
+                } else {
+                    const flights = JSON.parse(localStorage.getItem('flights'));
+                    const index = flights.findIndex(f => f.id === id);
+                    if (index !== -1) {
+                        flights[index] = { ...flights[index], ...updates };
+                        localStorage.setItem('flights', JSON.stringify(flights));
+                    }
+                }
+            }
+
+            async deleteFlight(id) {
+                if (this.useFirebase) {
+                    await database.ref('flights/' + id).remove();
+                } else {
+                    const flights = JSON.parse(localStorage.getItem('flights'));
+                    localStorage.setItem('flights', JSON.stringify(flights.filter(f => f.id !== id)));
+                }
+            }
+
+            // Booking Management
+            async addBooking(booking) {
+                booking.id = 'booking_' + Date.now();
+                booking.bookingReference = this.generateBookingRef();
+                booking.bookedAt = new Date().toISOString();
+                booking.status = 'booked';
+                
+                if (this.useFirebase) {
+                    await database.ref('bookings/' + booking.id).set(booking);
+                } else {
+                    const bookings = JSON.parse(localStorage.getItem('bookings'));
+                    bookings.push(booking);
+                    localStorage.setItem('bookings', JSON.stringify(bookings));
+                }
+                return booking;
+            }
+
+            async getAllBookings() {
+                if (this.useFirebase) {
+                    const snapshot = await database.ref('bookings').once('value');
+                    const bookings = snapshot.val();
+                    return bookings ? Object.values(bookings) : [];
+                } else {
+                    return JSON.parse(localStorage.getItem('bookings'));
+                }
+            }
+
+            async findBookingByReference(reference) {
+                if (this.useFirebase) {
+                    const snapshot = await database.ref('bookings').orderByChild('bookingReference').equalTo(reference.toUpperCase()).once('value');
+                    const bookings = snapshot.val();
+                    return bookings ? Object.values(bookings)[0] : null;
+                } else {
+                    const bookings = JSON.parse(localStorage.getItem('bookings'));
+                    return bookings.find(b => b.bookingReference === reference.toUpperCase());
+                }
+            }
+
+            async updateBooking(id, updates) {
+                if (this.useFirebase) {
+                    await database.ref('bookings/' + id).update(updates);
+                } else {
+                    const bookings = JSON.parse(localStorage.getItem('bookings'));
+                    const index = bookings.findIndex(b => b.id === id);
+                    if (index !== -1) {
+                        bookings[index] = { ...bookings[index], ...updates };
+                        localStorage.setItem('bookings', JSON.stringify(bookings));
+                    }
+                }
+            }
+
+            // Check-in Management
+            async addCheckin(checkin) {
+                checkin.id = 'checkin_' + Date.now();
+                checkin.checkedInAt = new Date().toISOString();
+                
+                if (this.useFirebase) {
+                    await database.ref('checkins/' + checkin.id).set(checkin);
+                } else {
+                    const checkins = JSON.parse(localStorage.getItem('checkins'));
+                    checkins.push(checkin);
+                    localStorage.setItem('checkins', JSON.stringify(checkins));
+                }
+                return checkin;
+            }
+
+            async getAllCheckins() {
+                if (this.useFirebase) {
+                    const snapshot = await database.ref('checkins').once('value');
+                    const checkins = snapshot.val();
+                    return checkins ? Object.values(checkins) : [];
+                } else {
+                    return JSON.parse(localStorage.getItem('checkins'));
+                }
+            }
+
+            async findCheckinByBooking(bookingId) {
+                if (this.useFirebase) {
+                    const snapshot = await database.ref('checkins').orderByChild('bookingId').equalTo(bookingId).once('value');
+                    const checkins = snapshot.val();
+                    return checkins ? Object.values(checkins)[0] : null;
+                } else {
+                    const checkins = JSON.parse(localStorage.getItem('checkins'));
+                    return checkins.find(c => c.bookingId === bookingId);
+                }
+            }
+
+            async occupySeat(flightId, seatNumber) {
+                if (this.useFirebase) {
+                    await database.ref(`flights/${flightId}/seats/${seatNumber}/status`).set('occupied');
+                } else {
+                    const flights = JSON.parse(localStorage.getItem('flights'));
+                    const flight = flights.find(f => f.id === flightId);
+                    if (flight && flight.seats[seatNumber]) {
+                        flight.seats[seatNumber].status = 'occupied';
+                        localStorage.setItem('flights', JSON.stringify(flights));
+                    }
+                }
+            }
+
+            generateBookingRef() {
+                const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+                let ref = '';
+                for (let i = 0; i < 6; i++) {
+                    ref += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                return ref;
+            }
+
+            async getAvailableDates() {
+                const flights = await this.getAllFlights();
+                const dates = [...new Set(flights.map(f => f.departureDate))];
+                return dates.sort();
+            }
+        }
+
+        const db = new AirlineDB();
+        let currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+
+        // ============================================================================
+        // NAVIGATION
+        // ============================================================================
+
+        function updateNav() {
+            const navAuth = document.getElementById('navAuth');
+            const dashboardLink = document.getElementById('dashboardLink');
+
+            if (currentUser) {
+                navAuth.innerHTML = `
+                    <span>Welcome, <strong>${currentUser.username}</strong> ${currentUser.role === 'admin' ? '(Admin)' : ''}</span>
+                    <button class="btn btn-secondary btn-small" onclick="logout()" style="margin-left: 1rem;">Logout</button>
+                `;
+                dashboardLink.classList.remove('hidden');
+            } else {
+                navAuth.innerHTML = `
+                    <button class="btn btn-secondary btn-small" onclick="showPage('login')">Login</button>
+                    <button class="btn btn-primary btn-small" onclick="showPage('register')">Register</button>
+                `;
+                dashboardLink.classList.add('hidden');
+            }
+        }
+
+        function showPage(page) {
+            const content = document.getElementById('content');
+            
+            switch(page) {
+                case 'home':
+                    content.innerHTML = getHomePage();
+                    break;
+                case 'login':
+                    content.innerHTML = getLoginPage();
+                    break;
+                case 'register':
+                    content.innerHTML = getRegisterPage();
+                    break;
+                case 'search':
+                    content.innerHTML = getSearchPage();
+                    loadSearchPage();
+                    break;
+                case 'checkin':
+                    content.innerHTML = getCheckinLookupPage();
+                    break;
+            }
+        }
+
+        async function showDashboard() {
+            if (!currentUser) {
+                showPage('login');
+                return;
+            }
+            
+            const content = document.getElementById('content');
+            content.innerHTML = '<div class="loading">Loading dashboard...</div>';
+            
+            if (currentUser.role === 'admin') {
+                content.innerHTML = await getAdminDashboard();
+            } else {
+                content.innerHTML = await getPassengerDashboard();
+            }
+        }
+
+        // ============================================================================
+        // PAGES
+        // ============================================================================
+
+        function getHomePage() {
+            return `
+                <div class="hero">
+                    <h1>Welcome to SunExpress</h1>
+                    <p class="hero-slogan">We strive to be Europe's most innovative and foremost Leisure Airline combining our German and Turkish values.</p>
+                    <button class="btn btn-primary" onclick="showPage('search')" style="margin-right: 1rem; font-size: 1.1rem; padding: 0.75rem 2rem;">Search Flights</button>
+                    <button class="btn btn-success" onclick="showPage('checkin')" style="margin-right: 1rem; font-size: 1.1rem; padding: 0.75rem 2rem;">Check-In</button>
+                    ${!currentUser ? '<button class="btn btn-secondary" onclick="showPage(\'register\')" style="font-size: 1.1rem; padding: 0.75rem 2rem;">Get Started</button>' : ''}
+                </div>
+                <div class="container">
+                    <div class="card">
+                        <h2 style="margin-bottom: 1rem; color: #FFB800;">Modern Fleet & Global Network</h2>
+                        <div class="dashboard-grid">
+                            <div class="stat-card">
+                                <div class="stat-number">7</div>
+                                <div class="stat-label">Aircraft Types</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">12</div>
+                                <div class="stat-label">Destinations</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">24/7</div>
+                                <div class="stat-label">Online Check-In</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer>
+                    <p>&copy; 2026 <strong>SunExpress</strong>. Europe's most innovative Leisure Airline.</p>
+                    <p>Combining German and Turkish Excellence | Secure Firebase-Powered System</p>
+                </footer>
+            `;
+        }
+
+        function getLoginPage() {
+            return `
+                <div class="container">
+                    <div class="card" style="max-width: 500px; margin: 2rem auto;">
+                        <h1 style="margin-bottom: 2rem; text-align: center; color: #FFB800;">Login to SunExpress</h1>
+                        ${!firebaseInitialized ? '<div class="alert alert-warning">Note: Firebase not configured. Using local storage mode.</div>' : ''}
+                        <form onsubmit="handleLogin(event)">
+                            <div class="form-group">
+                                <label>Username</label>
+                                <input type="text" id="username" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" id="password" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+                        </form>
+                        <p style="text-align: center; margin-top: 1rem;">
+                            Don't have an account? <a href="#" onclick="showPage('register')" style="color: #FFB800; font-weight: bold;">Register here</a>
+                        </p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getRegisterPage() {
+            return `
+                <div class="container">
+                    <div class="card" style="max-width: 500px; margin: 2rem auto;">
+                        <h1 style="margin-bottom: 2rem; text-align: center; color: #FFB800;">Create Account</h1>
+                        <form onsubmit="handleRegister(event)">
+                            <div class="form-group">
+                                <label>Username</label>
+                                <input type="text" id="username" required minlength="3">
+                            </div>
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" id="fullName" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" id="password" required minlength="6">
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">Register</button>
+                        </form>
+                        <p style="text-align: center; margin-top: 1rem;">
+                            Already have an account? <a href="#" onclick="showPage('login')" style="color: #FFB800; font-weight: bold;">Login here</a>
+                        </p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getSearchPage() {
+            const airportOptions = AIRPORTS.map(a => `<option value="${a.display}">${a.display}</option>`).join('');
+            
+            return `
+                <div class="container">
+                    <div class="card">
+                        <h1 style="margin-bottom: 2rem; color: #FFB800;">Search Flights</h1>
+                        <form onsubmit="handleSearch(event)">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>From</label>
+                                    <select id="origin" required>
+                                        <option value="">Select Origin</option>
+                                        ${airportOptions}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>To</label>
+                                    <select id="destination" required>
+                                        <option value="">Select Destination</option>
+                                        ${airportOptions}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Departure Date</label>
+                                    <select id="date" required>
+                                        <option value="">Loading dates...</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">Search Flights</button>
+                        </form>
+                    </div>
+                    <div id="searchResults"></div>
+                </div>
+            `;
+        }
+
+        async function loadSearchPage() {
+            const availableDates = await db.getAvailableDates();
+            const dateSelect = document.getElementById('date');
+            
+            if (availableDates.length > 0) {
+                dateSelect.innerHTML = '<option value="">Select Date</option>' + 
+                    availableDates.map(d => `<option value="${d}">${formatDateDisplay(d)}</option>`).join('');
+            } else {
+                dateSelect.innerHTML = '<option value="">No flights available</option>';
+            }
+        }
+
+        function getCheckinLookupPage() {
+            return `
+                <div class="container">
+                    <div class="checkin-hero">
+                        <h1>Online Check-In</h1>
+                        <p>Enter your booking reference to check in for your flight</p>
+                        <form onsubmit="handleCheckinLookup(event)">
+                            <div class="form-group reference-input">
+                                <label>Booking Reference</label>
+                                <input type="text" id="bookingReference" 
+                                       required 
+                                       maxlength="6" 
+                                       minlength="6"
+                                       placeholder="ABC123"
+                                       style="text-transform: uppercase; border-color: #FFB800;">
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="font-size: 1.2rem; padding: 1rem 3rem;">
+                                Search Booking
+                            </button>
+                        </form>
+                        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #e5e7eb;">
+                            <p style="color: #6b7280; font-size: 0.9rem;">
+                                <strong>Note:</strong> Your 6-character booking reference was provided when you booked your flight.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        async function getAdminDashboard() {
+            const flights = await db.getAllFlights();
+            const bookings = await db.getAllBookings();
+            const checkins = await db.getAllCheckins();
+            const users = (await db.getAllUsers()).filter(u => u.role === 'passenger');
+
+            let flightsHtml = '';
+            for (const flight of flights) {
+                const flightBookings = bookings.filter(b => b.flightId === flight.id);
+                const originAirport = AIRPORTS.find(a => a.display === flight.origin);
+                const destAirport = AIRPORTS.find(a => a.display === flight.destination);
+                
+                let bookingsDetailsHtml = '';
+                if (flightBookings.length > 0) {
+                    bookingsDetailsHtml = '<div class="booking-details-card"><strong>Passenger Bookings:</strong><br>';
+                    for (const booking of flightBookings) {
+                        const passenger = users.find(u => u.id === booking.userId);
+                        const checkin = checkins.find(c => c.bookingId === booking.id);
+                        bookingsDetailsHtml += `<div style="margin-top: 0.5rem;">
+                            • ${passenger ? passenger.fullName : 'Unknown'} - 
+                            Ref: <strong>${booking.bookingReference}</strong> - 
+                            ${checkin ? `Seat: <strong style="color: #FFB800;">${checkin.seatNumber}</strong> - Roblox: ${checkin.robloxUsername}` : 'Not checked in'}
+                        </div>`;
+                    }
+                    bookingsDetailsHtml += '</div>';
+                }
+                
+                flightsHtml += `
+                <div class="flight-card">
+                    <div class="flight-header">
+                        <div class="flight-number">${flight.flightNumber}</div>
+                        <span class="badge ${flight.checkinEnabled ? 'badge-success' : 'badge-warning'}">${flight.checkinEnabled ? 'Check-in Enabled' : 'Check-in Disabled'}</span>
+                    </div>
+                    <div><strong>Aircraft:</strong> ${flight.aircraft}</div>
+                    <div><strong>Route:</strong> ${originAirport ? originAirport.iata : 'N/A'} → ${destAirport ? destAirport.iata : 'N/A'} (${flight.origin} → ${flight.destination})</div>
+                    <div><strong>Date:</strong> ${formatDateDisplay(flight.departureDate)} | <strong>Departure:</strong> ${flight.departureTime} | <strong>Arrival:</strong> ${flight.arrivalTime}</div>
+                    <div><strong>Price:</strong> £${flight.price.toFixed(2)} | <strong>Bookings:</strong> ${flightBookings.length}</div>
+                    ${bookingsDetailsHtml}
+                    <div style="margin-top: 1rem;">
+                        <button class="btn btn-${flight.checkinEnabled ? 'warning' : 'success'} btn-small" onclick="toggleCheckin('${flight.id}')">${flight.checkinEnabled ? 'Disable' : 'Enable'} Check-in</button>
+                        <button class="btn btn-danger btn-small" onclick="deleteFlight('${flight.id}')">Delete</button>
+                        <button class="btn btn-primary btn-small" onclick="exportFlightData('${flight.id}')">Export for Roblox</button>
+                    </div>
+                </div>
+                `;
+            }
+
+            return `
+                <div class="container">
+                    <div class="card">
+                        <h1 style="margin-bottom: 2rem; color: #FFB800;">Admin Dashboard</h1>
+                        <div class="dashboard-grid">
+                            <div class="stat-card">
+                                <div class="stat-number">${flights.length}</div>
+                                <div class="stat-label">Total Flights</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">${bookings.length}</div>
+                                <div class="stat-label">Total Bookings</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">${users.length}</div>
+                                <div class="stat-label">Passengers</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+                            <h2 style="color: #FF8C00;">All Flights</h2>
+                            <button class="btn btn-primary" onclick="showCreateFlight()">Create New Flight</button>
+                        </div>
+                        ${flights.length === 0 ? '<div class="alert alert-info">No flights created yet.</div>' : flightsHtml}
+                    </div>
+                </div>
+            `;
+        }
+
+        async function getPassengerDashboard() {
+            const bookings = (await db.getAllBookings()).filter(b => b.userId === currentUser.id);
+            const flights = await db.getAllFlights();
+            const checkins = await db.getAllCheckins();
+
+            let bookingsHtml = '';
+            for (const booking of bookings) {
+                const flight = flights.find(f => f.id === booking.flightId);
+                if (!flight) continue;
+
+                const checkin = checkins.find(c => c.bookingId === booking.id);
+                const canCheckin = !checkin && (flight.checkinEnabled || isWithin30Minutes(flight));
+
+                bookingsHtml += `
+                    <div class="flight-card">
+                        <div class="flight-header">
+                            <div class="flight-number">${flight.flightNumber}</div>
+                            <span class="badge ${checkin ? 'badge-success' : 'badge-info'}">${checkin ? 'CHECKED-IN' : 'BOOKED'}</span>
+                        </div>
+                        <div><strong>Aircraft:</strong> ${flight.aircraft}</div>
+                        <div><strong>Route:</strong> ${flight.origin} → ${flight.destination}</div>
+                        <div><strong>Booking Reference:</strong> <span style="font-size: 1.2rem; color: #FFB800; font-weight: bold;">${booking.bookingReference}</span></div>
+                        <div><strong>Date:</strong> ${formatDateDisplay(flight.departureDate)}</div>
+                        <div><strong>Departure:</strong> ${flight.departureTime}</div>
+                        <div><strong>Price:</strong> £${flight.price.toFixed(2)}</div>
+                        ${checkin ? `<div><strong>Seat:</strong> <span style="color: #FFB800; font-weight: bold;">${checkin.seatNumber}</span></div>` : ''}
+                        <div style="margin-top: 1rem;">
+                            ${canCheckin ? `<button class="btn btn-success" onclick="startCheckinFromDashboard('${booking.bookingReference}')">Check In Now</button>` : ''}
+                            ${checkin ? `<button class="btn btn-primary" onclick="showBoardingPass('${booking.bookingReference}')">View Boarding Pass</button>` : ''}
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (bookings.length === 0) {
+                bookingsHtml = '<div class="alert alert-info">You don\'t have any bookings yet. <a href="#" onclick="showPage(\'search\')" style="color: #FFB800; font-weight: bold;">Search for flights</a> to get started!</div>';
+            }
+
+            return `
+                <div class="container">
+                    <div class="card">
+                        <h1 style="margin-bottom: 2rem; color: #FFB800;">My Bookings</h1>
+                        ${bookingsHtml}
+                    </div>
+                </div>
+            `;
+        }
+
+        // ============================================================================
+        // EXPORT FUNCTION FOR ROBLOX
+        // ============================================================================
+
+        async function exportFlightData(flightId) {
+            const flights = await db.getAllFlights();
+            const bookings = await db.getAllBookings();
+            const checkins = await db.getAllCheckins();
+            const users = await db.getAllUsers();
+            
+            const flight = flights.find(f => f.id === flightId);
+            const flightBookings = bookings.filter(b => b.flightId === flightId);
+            
+            let exportData = {
+                flightNumber: flight.flightNumber,
+                aircraft: flight.aircraft,
+                route: `${flight.origin} → ${flight.destination}`,
+                departureDate: flight.departureDate,
+                departureTime: flight.departureTime,
+                passengers: []
+            };
+            
+            for (const booking of flightBookings) {
+                const checkin = checkins.find(c => c.bookingId === booking.id);
+                const passenger = users.find(u => u.id === booking.userId);
+                
+                if (checkin) {
+                    exportData.passengers.push({
+                        robloxUsername: checkin.robloxUsername,
+                        robloxUserId: checkin.robloxUserId,
+                        seatNumber: checkin.seatNumber,
+                        passengerName: passenger ? passenger.fullName : 'Unknown',
+                        bookingRef: booking.bookingReference
+                    });
+                }
+            }
+            
+            const jsonString = JSON.stringify(exportData, null, 2);
+            
+            const content = document.getElementById('content');
+            content.innerHTML = `
+                <div class="container">
+                    <div class="card">
+                        <h1 style="color: #FFB800; margin-bottom: 1rem;">Export for Roblox - Flight ${flight.flightNumber}</h1>
+                        <div class="export-section">
+                            <h3 style="margin-bottom: 1rem;">Copy this JSON data for your Roblox game:</h3>
+                            <textarea id="exportData" readonly style="width: 100%; height: 400px; font-family: monospace; padding: 1rem; border: 2px solid #FFB800; border-radius: 5px;">${jsonString}</textarea>
+                            <div style="margin-top: 1rem;">
+                                <button class="btn btn-primary" onclick="copyExportData()">Copy to Clipboard</button>
+                                <button class="btn btn-secondary" onclick="showDashboard()">Back to Dashboard</button>
+                            </div>
+                        </div>
+                        <div class="alert alert-info" style="margin-top: 1rem;">
+                            <strong>Usage Instructions:</strong><br>
+                            1. Copy the JSON data above<br>
+                            2. In your Roblox game, paste this data into your aircraft seating script<br>
+                            3. The script should read each passenger's Roblox username and assign them to their reserved seat<br>
+                            4. Only the passengers listed can sit in their designated seats
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function copyExportData() {
+            const textarea = document.getElementById('exportData');
+            textarea.select();
+            document.execCommand('copy');
+            alert('Export data copied to clipboard! Paste it into your Roblox script.');
+        }
+
+        // Continue in next message due to length...
+        // (Rest of the functions including check-in flow, authentication, etc.)
+
+        // ============================================================================
+        // CHECK-IN FLOW (Simplified due to space)
+        // ============================================================================
+
+        async function handleCheckinLookup(e) {
+            e.preventDefault();
+            const reference = document.getElementById('bookingReference').value.toUpperCase();
+            
+            const booking = await db.findBookingByReference(reference);
+            
+            if (!booking) {
+                alert('Booking reference not found. Please check your reference and try again.');
+                return;
+            }
+
+            const flights = await db.getAllFlights();
+            const flight = flights.find(f => f.id === booking.flightId);
+            
+            if (!flight) {
+                alert('Flight not found for this booking.');
+                return;
+            }
+
+            const existingCheckin = await db.findCheckinByBooking(booking.id);
+            if (existingCheckin) {
+                alert('You have already checked in for this flight. Redirecting to boarding pass...');
+                showBoardingPass(reference);
+                return;
+            }
+
+            const canCheckin = flight.checkinEnabled || isWithin30Minutes(flight);
+            
+            if (!canCheckin) {
+                alert('Check-in is not yet available for this flight. Check-in opens 30 minutes before departure or when enabled by the airline.');
+                return;
+            }
+
+            startCheckin(reference, booking, flight);
+        }
+
+        function startCheckinFromDashboard(bookingReference) {
+            handleCheckinLookup({ preventDefault: () => {}, target: { elements: { bookingReference: { value: bookingReference } } } });
+        }
+
+        function startCheckin(bookingReference, booking, flight) {
+            const content = document.getElementById('content');
+            
+            content.innerHTML = `
+                <div class="container">
+                    <div class="card">
+                        <h1 style="margin-bottom: 1rem; text-align: center; color: #FFB800;">Online Check-In</h1>
+                        <div style="text-align: center; margin-bottom: 2rem; padding: 1rem; background: #fff8e1; border-radius: 10px; border: 2px solid #FFB800;">
+                            <strong style="color: #FF8C00;">Flight ${flight.flightNumber}</strong><br>
+                            ${flight.origin} → ${flight.destination}<br>
+                            ${formatDateDisplay(flight.departureDate)} at ${flight.departureTime}
+                        </div>
+                        <form onsubmit="handleCheckinStep1(event, '${bookingReference}', '${booking.id}', '${booking.flightId}')">
+                            <div class="form-group">
+                                <label>Booking Reference</label>
+                                <input type="text" value="${bookingReference}" readonly style="background: #f3f4f6;">
+                            </div>
+                            <div class="form-group">
+                                <label>Roblox Username *</label>
+                                <input type="text" id="robloxUsername" required placeholder="Enter your Roblox username">
+                            </div>
+                            <div class="form-group">
+                                <label>Roblox User ID *</label>
+                                <input type="number" id="robloxUserId" required placeholder="Enter your Roblox User ID">
+                            </div>
+                            <div class="form-group">
+                                <label>Gender *</label>
+                                <select id="gender" required>
+                                    <option value="">Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Prefer not to say">Prefer not to say</option>
+                                </select>
+                            </div>
+
+                            <div class="security-section">
+                                <div class="security-title">🔒 Security Declaration</div>
+                                <p style="text-align: center; margin-bottom: 1rem; color: #FF6B00;">You must agree to all security declarations to proceed</p>
+                                
+                                <div class="checkbox-group">
+                                    <label>
+                                        <input type="checkbox" id="check1" required>
+                                        <span>I confirm I am not carrying firearms</span>
+                                    </label>
+                                </div>
+                                <div class="checkbox-group">
+                                    <label>
+                                        <input type="checkbox" id="check2" required>
+                                        <span>I am not carrying dangerous goods</span>
+                                    </label>
+                                </div>
+                                <div class="checkbox-group">
+                                    <label>
+                                        <input type="checkbox" id="check3" required>
+                                        <span>I agree to airline security policies</span>
+                                    </label>
+                                </div>
+                                <div class="checkbox-group">
+                                    <label>
+                                        <input type="checkbox" id="check4" required>
+                                        <span>I understand false declarations may result in penalties</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">Continue to Seat Selection</button>
+                            <button type="button" class="btn btn-secondary" onclick="showPage('checkin')" style="width: 100%; margin-top: 1rem;">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+            `;
+        }
+
+        function handleCheckinStep1(e, bookingRef, bookingId, flightId) {
+            e.preventDefault();
+            
+            const robloxUsername = document.getElementById('robloxUsername').value;
+            const robloxUserId = document.getElementById('robloxUserId').value;
+            const gender = document.getElementById('gender').value;
+
+            const check1 = document.getElementById('check1').checked;
+            const check2 = document.getElementById('check2').checked;
+            const check3 = document.getElementById('check3').checked;
+            const check4 = document.getElementById('check4').checked;
+
+            if (!check1 || !check2 || !check3 || !check4) {
+                alert('You must agree to all security declarations to proceed.');
+                return;
+            }
+
+            sessionStorage.setItem('tempCheckin', JSON.stringify({
+                bookingId,
+                bookingRef,
+                robloxUsername,
+                robloxUserId,
+                gender
+            }));
+
+            showSeatSelection(flightId);
+        }
+
+        async function showSeatSelection(flightId) {
+            const flights = await db.getAllFlights();
+            const flight = flights.find(f => f.id === flightId);
+            const aircraft = AIRCRAFT_TYPES.find(a => a.name === flight.aircraft);
+            
+            const content = document.getElementById('content');
+            
+            let seatMapHtml = '';
+            const letters = ['A', 'B', 'C', 'D', 'E', 'F'];
+            
+            for (let row = 1; row <= aircraft.rows; row++) {
+                let rowHtml = `<div class="seat-row">`;
+                rowHtml += `<div class="seat-row-label">${row}</div>`;
+                
+                for (let i = 0; i < 6; i++) {
+                    const seatNumber = `${row}${letters[i]}`;
+                    const seat = flight.seats[seatNumber];
+                    const seatClass = seat && seat.status === 'available' ? 'available' : 'occupied';
+                    
+                    rowHtml += `<div class="seat ${seatClass}" data-seat="${seatNumber}" onclick="selectSeat('${seatNumber}', '${seatClass}')">${seatNumber}</div>`;
+                    
+                    if (i === 2) {
+                        rowHtml += `<div class="aisle"></div>`;
+                    }
+                }
+                
+                rowHtml += `</div>`;
+                seatMapHtml += rowHtml;
+            }
+
+            content.innerHTML = `
+                <div class="container">
+                    <div class="seat-map">
+                        <div class="seat-map-title">Select Your Seat - ${flight.aircraft}</div>
+                        <div style="text-align: center; margin-bottom: 1rem; color: #FF8C00;">
+                            <strong>Flight ${flight.flightNumber}:</strong> ${flight.origin} → ${flight.destination}
+                        </div>
+                        <div class="seat-legend">
+                            <div class="legend-item">
+                                <div class="legend-box available"></div>
+                                <span>Available</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-box occupied"></div>
+                                <span>Occupied</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-box selected"></div>
+                                <span>Selected</span>
+                            </div>
+                        </div>
+                        <div class="seat-rows">
+                            ${seatMapHtml}
+                        </div>
+                        <div style="text-align: center; margin-top: 2rem;">
+                            <button class="btn btn-primary" id="confirmSeatBtn" onclick="confirmSeatSelection('${flightId}')" disabled>Confirm Seat Selection</button>
+                            <button class="btn btn-secondary" onclick="showPage('checkin')" style="margin-left: 1rem;">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        let selectedSeat = null;
+
+        function selectSeat(seatNumber, seatClass) {
+            if (seatClass === 'occupied') {
+                return;
+            }
+
+            const seats = document.querySelectorAll('.seat');
+            seats.forEach(s => {
+                if (s.classList.contains('selected')) {
+                    s.classList.remove('selected');
+                    s.classList.add('available');
+                }
+            });
+
+            const seatElement = document.querySelector(`[data-seat="${seatNumber}"]`);
+            seatElement.classList.remove('available');
+            seatElement.classList.add('selected');
+
+            selectedSeat = seatNumber;
+            document.getElementById('confirmSeatBtn').disabled = false;
+        }
+
+        async function confirmSeatSelection(flightId) {
+            if (!selectedSeat) {
+                alert('Please select a seat');
+                return;
+            }
+
+            const tempCheckin = JSON.parse(sessionStorage.getItem('tempCheckin'));
+            
+            await db.addCheckin({
+                bookingId: tempCheckin.bookingId,
+                robloxUsername: tempCheckin.robloxUsername,
+                robloxUserId: tempCheckin.robloxUserId,
+                gender: tempCheckin.gender,
+                seatNumber: selectedSeat
+            });
+
+            await db.occupySeat(flightId, selectedSeat);
+            await db.updateBooking(tempCheckin.bookingId, { status: 'checked-in' });
+
+            sessionStorage.removeItem('tempCheckin');
+
+            showBoardingPass(tempCheckin.bookingRef);
+        }
+
+        async function showBoardingPass(bookingReference) {
+            const booking = await db.findBookingByReference(bookingReference);
+            const flights = await db.getAllFlights();
+            const flight = flights.find(f => f.id === booking.flightId);
+            const checkin = await db.findCheckinByBooking(booking.id);
+            const users = await db.getAllUsers();
+            const user = users.find(u => u.id === booking.userId);
+            
+            const content = document.getElementById('content');
+            
+            content.innerHTML = `
+                <div class="container">
+                    <div class="card">
+                        <div class="boarding-pass">
+                            <div class="boarding-pass-title">✈️ SunExpress Boarding Pass</div>
+                            <div class="boarding-pass-body">
+                                <div class="boarding-pass-field">
+                                    <div class="boarding-pass-label">Passenger Name</div>
+                                    <div class="boarding-pass-value">${user.fullName}</div>
+                                </div>
+                                <div class="boarding-pass-field">
+                                    <div class="boarding-pass-label">Roblox Username</div>
+                                    <div class="boarding-pass-value">${checkin.robloxUsername}</div>
+                                </div>
+                                <div class="boarding-pass-field">
+                                    <div class="boarding-pass-label">Roblox ID</div>
+                                    <div class="boarding-pass-value">${checkin.robloxUserId}</div>
+                                </div>
+                                <div class="boarding-pass-field">
+                                    <div class="boarding-pass-label">Gender</div>
+                                    <div class="boarding-pass-value">${checkin.gender}</div>
+                                </div>
+                                <div class="boarding-pass-field">
+                                    <div class="boarding-pass-label">Flight Number</div>
+                                    <div class="boarding-pass-value">${flight.flightNumber}</div>
+                                </div>
+                                <div class="boarding-pass-field">
+                                    <div class="boarding-pass-label">Origin</div>
+                                    <div class="boarding-pass-value">${flight.origin}</div>
+                                </div>
+                                <div class="boarding-pass-field">
+                                    <div class="boarding-pass-label">Destination</div>
+                                    <div class="boarding-pass-value">${flight.destination}</div>
+                                </div>
+                                <div class="boarding-pass-field">
+                                    <div class="boarding-pass-label">Aircraft</div>
+                                    <div class="boarding-pass-value">${flight.aircraft}</div>
+                                </div>
+                                <div class="boarding-pass-field">
+                                    <div class="boarding-pass-label">Seat Number</div>
+                                    <div class="boarding-pass-value" style="font-size: 2.5rem; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">${checkin.seatNumber}</div>
+                                </div>
+                                <div class="boarding-pass-field">
+                                    <div class="boarding-pass-label">Booking Reference</div>
+                                    <div class="boarding-pass-value">${booking.bookingReference}</div>
+                                </div>
+                                <div class="boarding-pass-field">
+                                    <div class="boarding-pass-label">Departure Date</div>
+                                    <div class="boarding-pass-value">${formatDateDisplay(flight.departureDate)}</div>
+                                </div>
+                                <div class="boarding-pass-field">
+                                    <div class="boarding-pass-label">Departure Time</div>
+                                    <div class="boarding-pass-value">${flight.departureTime}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 2rem; text-align: center;">
+                            <div class="alert alert-success">
+                                <strong>✅ Check-in Complete!</strong><br>
+                                Your boarding pass is ready. Please arrive at the gate 30 minutes before departure.
+                            </div>
+                            <button class="btn btn-primary" onclick="window.print()" style="font-size: 1.1rem; padding: 0.75rem 2rem;">Print Boarding Pass</button>
+                            <button class="btn btn-secondary" onclick="showPage('home')" style="margin-left: 1rem; font-size: 1.1rem; padding: 0.75rem 2rem;">Back to Home</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ============================================================================
+        // FLIGHT ACTIONS
+        // ============================================================================
+
+        async function handleSearch(e) {
+            e.preventDefault();
+            const origin = document.getElementById('origin').value;
+            const destination = document.getElementById('destination').value;
+            const date = document.getElementById('date').value;
+
+            const flights = (await db.getAllFlights()).filter(f => 
+                f.origin === origin &&
+                f.destination === destination &&
+                f.departureDate === date
+            );
+
+            const resultsDiv = document.getElementById('searchResults');
+            
+            if (flights.length === 0) {
+                resultsDiv.innerHTML = '<div class="card"><div class="alert alert-info">No flights found matching your search.</div></div>';
+                return;
+            }
+
+            const flightsHtml = flights.map(f => `
+                <div class="flight-card">
+                    <div class="flight-header">
+                        <div class="flight-number">${f.flightNumber}</div>
+                        <div class="flight-price">£${f.price.toFixed(2)}</div>
+                    </div>
+                    <div><strong>Aircraft:</strong> ${f.aircraft}</div>
+                    <div><strong>Route:</strong> ${f.origin} → ${f.destination}</div>
+                    <div><strong>Date:</strong> ${formatDateDisplay(f.departureDate)}</div>
+                    <div><strong>Departure:</strong> ${f.departureTime} | <strong>Arrival:</strong> ${f.arrivalTime}</div>
+                    <div style="margin-top: 1rem;">
+                        ${currentUser && currentUser.role === 'passenger' ? 
+                            `<button class="btn btn-success" onclick="bookFlight('${f.id}')">Book Flight</button>` :
+                            !currentUser ? '<button class="btn btn-primary" onclick="showPage(\'login\')">Login to Book</button>' : ''
+                        }
+                    </div>
+                </div>
+            `).join('');
+
+            resultsDiv.innerHTML = `<div class="card">${flightsHtml}</div>`;
+        }
+
+        async function bookFlight(flightId) {
+            if (!currentUser) {
+                alert('Please login to book flights');
+                showPage('login');
+                return;
+            }
+
+            const bookings = await db.getAllBookings();
+            const existingBooking = bookings.find(b => 
+                b.userId === currentUser.id && b.flightId === flightId
+            );
+
+            if (existingBooking) {
+                alert('You have already booked this flight');
+                return;
+            }
+
+            const booking = await db.addBooking({
+                userId: currentUser.id,
+                flightId: flightId
+            });
+
+            alert(`Flight booked successfully!\n\nYour booking reference: ${booking.bookingReference}\n\nIMPORTANT: Please save this reference for check-in.`);
+            showDashboard();
+        }
+
+        function showCreateFlight() {
+            const airportOptions = AIRPORTS.map(a => `<option value="${a.display}">${a.display}</option>`).join('');
+            const aircraftOptions = AIRCRAFT_TYPES.map(a => `<option value="${a.name}">${a.name}</option>`).join('');
+            
+            const content = document.getElementById('content');
+            
+            content.innerHTML = `
+                <div class="container">
+                    <div class="card">
+                        <h1 style="margin-bottom: 2rem; color: #FFB800;">Create New Flight</h1>
+                        <form onsubmit="handleCreateFlight(event)">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Flight Number *</label>
+                                    <input type="text" id="flightNumber" required placeholder="e.g., XQ101">
+                                </div>
+                                <div class="form-group">
+                                    <label>Aircraft Type *</label>
+                                    <select id="aircraft" required>
+                                        <option value="">Select Aircraft</option>
+                                        ${aircraftOptions}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Price (£) *</label>
+                                    <input type="number" id="price" step="0.01" required placeholder="99.99">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Origin Airport *</label>
+                                    <select id="origin" required>
+                                        <option value="">Select Origin</option>
+                                        ${airportOptions}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Destination Airport *</label>
+                                    <select id="destination" required>
+                                        <option value="">Select Destination</option>
+                                        ${airportOptions}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Departure Date *</label>
+                                    <input type="date" id="departureDate" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Departure Time *</label>
+                                    <input type="time" id="departureTime" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Arrival Time *</label>
+                                    <input type="time" id="arrivalTime" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Create Flight</button>
+                            <button type="button" class="btn btn-secondary" onclick="showDashboard()" style="margin-left: 1rem;">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+            `;
+        }
+
+        async function handleCreateFlight(e) {
+            e.preventDefault();
+            
+            const flightNumber = document.getElementById('flightNumber').value;
+            const aircraft = document.getElementById('aircraft').value;
+            const origin = document.getElementById('origin').value;
+            const destination = document.getElementById('destination').value;
+            
+            if (origin === destination) {
+                alert('Origin and destination cannot be the same');
+                return;
+            }
+            
+            await db.addFlight({
+                flightNumber,
+                aircraft,
+                origin,
+                destination,
+                departureDate: document.getElementById('departureDate').value,
+                departureTime: document.getElementById('departureTime').value,
+                arrivalTime: document.getElementById('arrivalTime').value,
+                price: parseFloat(document.getElementById('price').value),
+                checkinEnabled: false
+            });
+            
+            alert('Flight created successfully with seat map!');
+            showDashboard();
+        }
+
+        async function deleteFlight(id) {
+            const bookings = (await db.getAllBookings()).filter(b => b.flightId === id);
+            if (bookings.length > 0) {
+                alert('Cannot delete flight with existing bookings');
+                return;
+            }
+            if (confirm('Are you sure you want to delete this flight?')) {
+                await db.deleteFlight(id);
+                showDashboard();
+            }
+        }
+
+        async function toggleCheckin(id) {
+            const flights = await db.getAllFlights();
+            const flight = flights.find(f => f.id === id);
+            await db.updateFlight(id, { checkinEnabled: !flight.checkinEnabled });
+            showDashboard();
+        }
+
+        // ============================================================================
+        // AUTH ACTIONS
+        // ============================================================================
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const user = await db.findUser(username);
+            if (user && user.password === password) {
+                currentUser = user;
+                sessionStorage.setItem('currentUser', JSON.stringify(user));
+                updateNav();
+                showDashboard();
+            } else {
+                alert('Invalid username or password');
+            }
+        }
+
+        async function handleRegister(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const existingUser = await db.findUser(username);
+            if (existingUser) {
+                alert('Username already exists');
+                return;
+            }
+
+            const user = await db.addUser({
+                username,
+                fullName,
+                email,
+                password,
+                role: 'passenger'
+            });
+
+            currentUser = user;
+            sessionStorage.setItem('currentUser', JSON.stringify(user));
+            updateNav();
+            showDashboard();
+        }
+
+        function logout() {
+            currentUser = null;
+            sessionStorage.removeItem('currentUser');
+            sessionStorage.removeItem('tempCheckin');
+            updateNav();
+            showPage('home');
+        }
+
+        // ============================================================================
+        // UTILITY
+        // ============================================================================
+
+        function isWithin30Minutes(flight) {
+            const now = new Date();
+            const departure = new Date(`${flight.departureDate}T${flight.departureTime}`);
+            const diff = departure - now;
+            const minutesDiff = diff / (1000 * 60);
+            return minutesDiff <= 30 && minutesDiff >= 0;
+        }
+
+        function formatDateDisplay(dateString) {
+            const date = new Date(dateString);
+            const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+            return date.toLocaleDateString('en-GB', options);
+        }
+
+        // ============================================================================
+        // INITIALIZATION
+        // ============================================================================
+
+        // Initialize admin account in Firebase
+        async function initializeAdmin() {
+            if (firebaseInitialized) {
+                try {
+                    const existingAdmin = await db.findUser('SunexpressAdmin');
+                    if (!existingAdmin) {
+                        await database.ref('users/admin001').set({
+                            id: 'admin001',
+                            username: 'SunexpressAdmin',
+                            password: 'SunEXPRESSadmin!',
+                            role: 'admin',
+                            fullName: 'System Administrator',
+                            email: 'admin@sunexpress.com',
+                            createdAt: new Date().toISOString()
+                        });
+                        console.log('✅ Admin account created in Firebase');
+                    }
+                } catch (error) {
+                    console.error('Error initializing admin:', error);
+                }
+            }
+        }
+
+        initializeAdmin();
+        updateNav();
+        showPage('home');
+    </script>
+</body>
+</html>
